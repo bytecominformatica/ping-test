@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="pingTestApp">
 <head>
     <meta charset="utf-8">
-    <title>AngularJS UI Tree demo</title>
+    <title>Ping Test</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="lib/angular-ui-tree/angular-ui-tree.min.css">
     <link rel="stylesheet" href="css/demo.css">
 </head>
-<body ng-app="treeApp">
+<body>
 
 <div class="container" ng-controller="treeCtrl">
-    <h1 class="page-header">Tree - demo</h1>
-    <a href="index.html"><i class="glyphicon glyphicon-chevron-left"></i> Back to overview page</a>
+    <h1 class="page-header">Ping Teste</h1>
 
     <div class="row">
-        <div class="col-lg-6">
-            <h3>Tree view
+        <div class="col-lg-12">
+            <h3>Monitoramento
                 <a href="" class="btn btn-default pull-right" ng-click="collapseAll()">Collapse all</a>
                 <a href="" class="btn btn-default pull-right" ng-click="expandAll()">Expand all</a>
                 <a href="" class="btn btn-default btn-warning pull-right" ng-click="moveLastToTheBegginig()">Move Last To The Beginning</a>
@@ -43,20 +42,12 @@
                 </ol>
             </div>
         </div>
-
-        <div class="col-lg-6">
-            <h3>Data binding</h3>
-            <div class="info">
-                {{info}}
-            </div>
-            <pre class="code">{{ data | json }}</pre>
-        </div>
     </div>
 
 </div>
 
 <script src="lib/angular/angular.min.js"></script>
 <script type="text/javascript" src="lib/angular-ui-tree/angular-ui-tree.js"></script>
-<script type="text/javascript" src="lib/angular-ui-tree/tree.js"></script>
+<script type="text/javascript" src="app.js"></script>
 </body>
 </html>
