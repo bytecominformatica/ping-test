@@ -1,11 +1,11 @@
 {
-  "name": "ping-test",
+  "name": "ping-test-ui",
   "version": "0.0.0",
   "description": "",
-  "main": "app.js",
   "dependencies": {
     "sequelize": "~3.2.0",
-    "mysql": "~2.7.0"
+    "mysql": "~2.7.0",
+    "angular": "~1.4.0"
   },
   "devDependencies": {},
   "scripts": {
