@@ -38,6 +38,12 @@ app.controller('treeCtrl', function($scope, hostsAPI) {
 	  scope.expandAll();
 	};
 
-	$scope.data = hostsAPI.getHosts();
+	var carregarHosts = function() {
+		hostsAPI.getHosts().success(function(data) {
+			$scope.data = data; 
+		});
+	};
+	
+	carregarHosts();
 	
 });
