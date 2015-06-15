@@ -31,11 +31,9 @@ app.get('/hosts', function(req, res) {
             }]
      }];
 
-     console.log('teste');
-     var _json = JSON.stringify(_hosts);
-     console.log(_json);
+    var _json = JSON.stringify(_hosts);
 
-  res.end(_json);
+	res.end(_json);
 });
 
 app.listen(3000);
