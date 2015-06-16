@@ -1,0 +1,23 @@
+{
+  "name": "ping-test",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bytecomoficial/ping-test.git"
+  },
+  "author": "clairtonluz",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/bytecomoficial/ping-test/issues"
+  },
+  "dependencies": {
+    "mysql": "~2.7.0",
+    "sequelize": "~3.2.0",
+    "express": "~4.12.4"
+  }
+}

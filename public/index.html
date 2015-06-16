@@ -6,7 +6,7 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="lib/angular-ui-tree/angular-ui-tree.min.css">
+    <link rel="stylesheet" href="js/angular-ui-tree/angular-ui-tree.min.css">
     <link rel="stylesheet" href="css/demo.css">
 </head>
 <body>
@@ -20,14 +20,13 @@
                 <a href="" class="btn btn-default pull-right" ng-click="collapseAll()">Collapse all</a>
                 <a href="" class="btn btn-default pull-right" ng-click="expandAll()">Expand all</a>
                 <a href="" class="btn btn-default btn-warning pull-right" ng-click="moveLastToTheBegginig()">Move Last To The Beginning</a>
-
             </h3>
 
             <!-- Nested node template -->
             <script type="text/ng-template" id="nodes_renderer.html">
                 <div ui-tree-handle class="tree-node tree-node-content">
                     <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
-                    {{node.title}}
+                    <a href="http://{{node.ip}}" target="_blank">{{node.title}}</a>
                     <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
                     <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
                 </div>
@@ -46,8 +45,10 @@
 
 </div>
 
-<script src="lib/angular/angular.min.js"></script>
-<script type="text/javascript" src="lib/angular-ui-tree/angular-ui-tree.js"></script>
+<script src="node_modules/angular/angular.min.js"></script>
+<script type="text/javascript" src="js/angular-ui-tree/angular-ui-tree.js"></script>
 <script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="controllers/treeCtrl.js"></script>
+<script type="text/javascript" src="services/hostsAPIService.js"></script>
 </body>
 </html>
