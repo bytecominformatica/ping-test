@@ -40,7 +40,7 @@ app.controller('treeCtrl', function($scope, hostsAPI) {
 
 	var carregarHosts = function() {
 		hostsAPI.getHosts().success(function(data) {
-			$scope.data = data; 
+			$scope.data = data;
 		});
 	};
 	
