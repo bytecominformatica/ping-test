@@ -41,6 +41,15 @@ app.controller('treeCtrl', function($scope, hostsAPI) {
 	var carregarHosts = function() {
 		hostsAPI.getHosts().success(function(data) {
 			$scope.data = data;
+			checkHostsOnline();
+		});
+	};
+	
+	var checkHostsOnline = function() {
+		$scope.data.forEach(function(host) {
+			hostsAPI.isOnline(host).success(function(data) {
+				host.online = data.success;
+			});
 		});
 	};
 	
