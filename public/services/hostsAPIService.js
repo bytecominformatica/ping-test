@@ -1,4 +1,7 @@
-angular.module("pingTestApp").factory("hostsAPI", function ($http) {
+angular.module("pingTestApp")
+	.factory("hostsAPI", hostAPI);
+
+function hostAPI ($http) {
 	var _getHosts = function () {
 		return $http.get("/hosts");
 	};
@@ -11,4 +14,4 @@ angular.module("pingTestApp").factory("hostsAPI", function ($http) {
 		getHosts: _getHosts,
 		isOnline: _isOnline
 	};
-});
+}
