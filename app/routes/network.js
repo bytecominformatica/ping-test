@@ -14,7 +14,6 @@ module.exports = function(app) {
 					res.end(JSON.stringify(_result));
 				} else {
 					_result = { success : true, target : target }
-					console.log(_result);
 					res.end(JSON.stringify(_result));
 				}
 			});
