@@ -25,7 +25,7 @@
             <!-- Nested node template -->
             <script type="text/ng-template" id="nodes_renderer.html">
                 <div ui-tree-handle class="tree-node tree-node-content">
-                    <a class="btn btn-xs" ng-class="{'btn-success': collapsed, 'btn-danger': !collapsed}" data-nodrag ng-click="toggle(this)">
+                    <a class="btn btn-xs" ng-class="{'btn-success': node.online, 'btn-danger': !node.online}" data-nodrag ng-click="toggle(this)">
 						<span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span>
 					</a>
                     <a href="http://{{node.ip}}" target="_blank">{{node.title}}</a>
