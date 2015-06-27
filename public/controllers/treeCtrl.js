@@ -7,14 +7,14 @@ function treeCtrl($scope, hostsAPI) {
 	$scope.toggle = toggle
 	$scope.moveLastToTheBegginig = moveLastToTheBegginig
 	$scope.newSubItem = newSubItem
-	var getRootNodesScope = getRootNodesScope
 	$scope.collapseAll = collapseAll
 	$scope.expandAll = expandAll
-	var carregarHosts = carregarHosts
-	var checkHostsOnline = checkHostsOnline
+
+	var _getRootNodesScope = getRootNodesScope
+	var _carregarHosts = carregarHosts
+	var _checkHostOnline = checkHostOnline
 	
-	carregarHosts();
-	
+	_carregarHosts();
 	
 	function remove(scope) {
 	  scope.remove();
@@ -42,28 +42,34 @@ function treeCtrl($scope, hostsAPI) {
 	};
 
 	function collapseAll() {
-	  var scope = getRootNodesScope();
+	  var scope = _getRootNodesScope();
 	  scope.collapseAll();
 	};
 
 	function expandAll() {
-	  var scope = getRootNodesScope();
+	  var scope = _getRootNodesScope();
 	  scope.expandAll();
 	};
 	
 	function carregarHosts() {
 		hostsAPI.getHosts().success(function(data) {
 			$scope.data = data;
-			checkHostsOnline();
+			$scope.data.forEach(function(host) {
+				_checkHostOnline(host);
+			});
 		});
 	};
 	
-	function checkHostsOnline() {
-		$scope.data.forEach(function(host) {
-			hostsAPI.isOnline(host).success(function(data) {
-				host.online = data.success;
-			});
+	function checkHostOnline(host) {
+		hostsAPI.isOnline(host).success(function(data) {
+			host.online = data.success;
 		});
+		
+		if (host.nodes) {
+			host.nodes.forEach(function(host2) {
+				_checkHostOnline(host2);
+			});
+		};
 	};
 	
 }
