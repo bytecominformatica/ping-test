@@ -1,5 +1,5 @@
 var ping = require ("net-ping");
-var session = ping.createSession();
+var session = ping.createSession({packetSize: 2000});
 
 module.exports = function(app) {
 	app.get('/ping/:ip', function(req, res) {
