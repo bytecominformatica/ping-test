@@ -3,7 +3,10 @@ var Sequelize = require('sequelize');
 var sequelize = require('./connection')();
 const modelsDir = __dirname + "/../model/"
 
-module.exports = function() {
+module.exports.sync = sync
+module.exports.import = importModel
+
+function sync() {
     pathUtil.walk(modelsDir, function(err, models) {
       if (err) throw err;
 
@@ -17,6 +20,6 @@ module.exports = function() {
     });
 }
 
-module.exports.import = function(model) {
+function importModel(model) {
     return sequelize.import(modelsDir + model);
 }
