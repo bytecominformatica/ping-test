@@ -13,7 +13,7 @@ function getHosts(req, res) {
 			  nodes: []
 			}, {
 			  title: "bytecom-patricia-gomes-rep2",
-			  ip: "10.77.10100.102",
+			  ip: "10.77.100.102",
 			  nodes: []
 			}, {
 			  title: "bytecom-patricia-gomes-rep3",
@@ -21,7 +21,7 @@ function getHosts(req, res) {
 			  nodes: []
 			}, {
 			  title: "bytecom-patricia-gomes-rep4",
-			  ip: "10.77.100100.104",
+			  ip: "10.77.100.104",
 			  nodes: []
 			}, {
 			  title: "bytecom-patricia-gomes-omni",

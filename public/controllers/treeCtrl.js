@@ -63,6 +63,9 @@ function treeCtrl($scope, hostsAPI) {
 	function checkHostOnline(host) {
 		hostsAPI.isOnline(host).success(function(data) {
 			host.online = data.success;
+			if(!host.online) {
+				console.log(data.error);
+			}
 		});
 		
 		if (host.nodes) {
