@@ -2,20 +2,18 @@ var app = angular.module("pingTestApp");
 
 app.controller('treeCtrl', function($scope, hostsAPI) {
 
-	$scope.remove = function(scope) {
-	  scope.remove();
-	};
-
-	$scope.toggle = function(scope) {
-	  scope.toggle();
-	};
-
-	$scope.moveLastToTheBegginig = function () {
+	$scope.remove = remove
+	$scope.toggle = toggle
+	$scope.moveLastToTheBegginig = moveLastToTheBegginig
+	$scope.newSubItem = newSubItem
+	
+	
+	function moveLastToTheBegginig() {
 	  var a = $scope.data.pop();
 	  $scope.data.splice(0,0, a);
 	};
-
-	$scope.newSubItem = function(scope) {
+	
+	function newSubItem(scope) {
 	  var nodeData = scope.$modelValue;
 	  nodeData.nodes.push({
 		id: nodeData.id * 10 + nodeData.nodes.length,
@@ -55,4 +53,15 @@ app.controller('treeCtrl', function($scope, hostsAPI) {
 	
 	carregarHosts();
 	
+	
+	function remove(scope) {
+	  scope.remove();
+	};
+	
+	function toggle(scope) {
+	  scope.toggle();
+	};
+
+	
 });
+
