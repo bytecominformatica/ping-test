@@ -1,6 +1,10 @@
 module.exports = function(sequelize, DataTypes) {
-    return sequelize.define('host', {
+    var Host = sequelize.define('host', {
         name: {type: DataTypes.STRING},
         ip: {type: DataTypes.STRING}
     });
+
+    Host.hasMany(Host, {as: 'nodes'});
+
+    return Host;
 };
