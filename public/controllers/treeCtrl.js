@@ -1,13 +1,29 @@
-var app = angular.module("pingTestApp");
-
-app.controller('treeCtrl', function($scope, hostsAPI) {
+angular.module("pingTestApp")
+	.controller('treeCtrl', treeCtrl);
+	
+function treeCtrl($scope, $timeout, hostsAPI) {
 
 	$scope.remove = remove
 	$scope.toggle = toggle
 	$scope.moveLastToTheBegginig = moveLastToTheBegginig
 	$scope.newSubItem = newSubItem
+	$scope.collapseAll = collapseAll
+	$scope.expandAll = expandAll
+
+	var _getRootNodesScope = getRootNodesScope
+	var _carregarHosts = carregarHosts
+	var _checkHostOnline = checkHostOnline
 	
+	_carregarHosts();
 	
+	function remove(scope) {
+	  scope.remove();
+	};
+	
+	function toggle(scope) {
+	  scope.toggle();
+	};
+
 	function moveLastToTheBegginig() {
 	  var a = $scope.data.pop();
 	  $scope.data.splice(0,0, a);
@@ -21,47 +37,40 @@ app.controller('treeCtrl', function($scope, hostsAPI) {
 		nodes: []
 	  });
 	};
-
-	var getRootNodesScope = function() {
+	function getRootNodesScope() {
 	  return angular.element(document.getElementById("tree-root")).scope();
 	};
 
-	$scope.collapseAll = function() {
-	  var scope = getRootNodesScope();
+	function collapseAll() {
+	  var scope = _getRootNodesScope();
 	  scope.collapseAll();
 	};
 
-	$scope.expandAll = function() {
-	  var scope = getRootNodesScope();
+	function expandAll() {
+	  var scope = _getRootNodesScope();
 	  scope.expandAll();
 	};
-
-	var carregarHosts = function() {
+	
+	function carregarHosts() {
 		hostsAPI.getHosts().success(function(data) {
 			$scope.data = data;
-			checkHostsOnline();
-		});
-	};
-	
-	var checkHostsOnline = function() {
-		$scope.data.forEach(function(host) {
-			hostsAPI.isOnline(host).success(function(data) {
-				host.online = data.success;
+			$scope.data.forEach(function(host) {
+				_checkHostOnline(host);
 			});
 		});
 	};
 	
-	carregarHosts();
-	
-	
-	function remove(scope) {
-	  scope.remove();
+	function checkHostOnline(host) {
+		hostsAPI.isOnline(host).success(function(data) {
+			host.online = data.success;
+		});
+		
+		if (host.nodes) {
+			host.nodes.forEach(function(host2) {
+				_checkHostOnline(host2);
+			});
+		};
 	};
 	
-	function toggle(scope) {
-	  scope.toggle();
-	};
-
-	
-});
+}
 
