@@ -4,6 +4,7 @@ var httpUtil = require('../util/http-util');
 
 module.exports = function(app) {
 	app.get('/hosts', findAll);
+	app.get('/hosts/:id', findById);
 	app.post('/hosts', save)
 }
 
@@ -16,8 +17,37 @@ function save(req, res){
 }
 
 
-function findAll(req, res) {
+function findById(req, res) {
+	Host.findById(req.params.id).then(function(host) {
+		host.getNodes().then(function(nodes) {
+			getNodes(host, nodes, res);
+		});
+    }).catch(function(err){
+		httpUtil.error(res, err);
+	});
+}
 
+function getNodes(host, nodes, res){
+	var _host = host.dataValues;
+	_host.nodes = [];
+	nodes.forEach(function(node){
+		_host.nodes.push(node.dataValues)
+	});
+	console.log(_host);
+	httpUtil.sucess(res, _host);
+}
+
+function findAll(req, res) {
+	Host.findAll().then(function(hosts){
+		var _hosts = []
+
+		hosts.forEach(function(it){
+			var _host = it.dataValues;
+			it.getNodes().then
+		})
+
+		console.log(hosts);
+	});
   var _hosts = [{
 	 title: "bytecom-mk-patricia-gomes",
 	 ip: "10.77.100.1",
