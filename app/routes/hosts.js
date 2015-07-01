@@ -16,69 +16,82 @@ function save(req, res){
 	});
 }
 
-
 function findById(req, res) {
 	Host.findById(req.params.id).then(function(host) {
-		host.getNodes().then(function(nodes) {
-			getNodes(host, nodes, res);
-		});
+        getNodes(host, function(err, data){
+            httpUtil.sucess(res, data);
+        });
     }).catch(function(err){
 		httpUtil.error(res, err);
 	});
 }
 
-function getNodes(host, nodes, res){
-	var _host = host.dataValues;
-	_host.nodes = [];
-	nodes.forEach(function(node){
-		_host.nodes.push(node.dataValues)
-	});
-	console.log(_host);
-	httpUtil.sucess(res, _host);
+
+function getNodes(host, callback){
+    host.getNodes().then(function(nodes) {
+        var _host = host.dataValues;
+        _host.nodes = [];
+
+        nodes.forEach(function(node){
+            _host.nodes.push(node.dataValues)
+        });
+
+	    callback(null, _host);
+    });
 }
+
 
 function findAll(req, res) {
 	Host.findAll().then(function(hosts){
 		var _hosts = []
 
-		hosts.forEach(function(it){
-			var _host = it.dataValues;
-			it.getNodes().then
-		})
+		hosts.forEach(function(it, index){
+            getNodes(it, function(err, data){
+                _hosts.push(data);
+                
+                if(hosts.length === _hosts.length) {
+                    console.log("sucesso");
+                    httpUtil.sucess(res, _hosts);
+                }
+            });
 
-		console.log(hosts);
-	});
-  var _hosts = [{
-	 title: "bytecom-mk-patricia-gomes",
-	 ip: "10.77.100.1",
-	 nodes: [
-			{
-			  title: "bytecom-patricia-gomes-rep1",
-			  ip: "10.77.100.101",
-			  nodes: []
-			}, {
-			  title: "bytecom-patricia-gomes-rep2",
-			  ip: "10.77.100.102",
-			  nodes: []
-			}, {
-			  title: "bytecom-patricia-gomes-rep3",
-			  ip: "10.77.100.103",
-			  nodes: []
-			}, {
-			  title: "bytecom-patricia-gomes-rep4",
-			  ip: "10.77.100.104",
-			  nodes: []
-			}, {
-			  title: "bytecom-patricia-gomes-omni",
-			  ip: "10.77.100.105",
-			  nodes: []
-			}]
-	 }];
+        });
 
-	var _json = JSON.stringify(_hosts);
+	}).catch(function(err){
+        httpUtil.error(res, err);
+    });
 
-	res.set('Content-Type', 'application/json');
-	res.end(_json);
+//  var _hosts = [{
+//	 title: "bytecom-mk-patricia-gomes",
+//	 ip: "10.77.100.1",
+//	 nodes: [
+//			{
+//			  title: "bytecom-patricia-gomes-rep1",
+//			  ip: "10.77.100.101",
+//			  nodes: []
+//			}, {
+//			  title: "bytecom-patricia-gomes-rep2",
+//			  ip: "10.77.100.102",
+//			  nodes: []
+//			}, {
+//			  title: "bytecom-patricia-gomes-rep3",
+//			  ip: "10.77.100.103",
+//			  nodes: []
+//			}, {
+//			  title: "bytecom-patricia-gomes-rep4",
+//			  ip: "10.77.100.104",
+//			  nodes: []
+//			}, {
+//			  title: "bytecom-patricia-gomes-omni",
+//			  ip: "10.77.100.105",
+//			  nodes: []
+//			}]
+//	 }];
+//
+//	var _json = JSON.stringify(_hosts);
+//
+//	res.set('Content-Type', 'application/json');
+//	res.end(_json);
 }
 
 
