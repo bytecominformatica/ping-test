@@ -1,6 +1,7 @@
 var DB = require('../db/data-base');
 var Host = DB.import('host');
 var httpUtil = require('../util/http-util');
+var hostDao = require('../dao/hostDao');
 
 module.exports = function(app) {
 	app.get('/hosts', findAll);
@@ -9,7 +10,7 @@ module.exports = function(app) {
 }
 
 function save(req, res){
-	Host.create(req.body).then(function(host){
+    Host.create(req.body).then(function(host){
 		httpUtil.sucess(res, host.dataValues);
 	}).catch(function(err){
 		httpUtil.error(res, err);
@@ -17,13 +18,11 @@ function save(req, res){
 }
 
 function findById(req, res) {
-	Host.findById(req.params.id).then(function(host) {
-        getNodes(host, function(err, data){
-            httpUtil.sucess(res, data);
-        });
-    }).catch(function(err){
-		httpUtil.error(res, err);
-	});
+    hostDao.findById(req.params.id, function(err, data){
+        if(err) httpUtil.error(res, err);
+
+        httpUtil.sucess(res, data);
+    });
 }
 
 
@@ -48,7 +47,7 @@ function findAll(req, res) {
 		hosts.forEach(function(it, index){
             getNodes(it, function(err, data){
                 _hosts.push(data);
-                
+
                 if(hosts.length === _hosts.length) {
                     console.log("sucesso");
                     httpUtil.sucess(res, _hosts);
