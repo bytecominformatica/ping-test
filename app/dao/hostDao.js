@@ -3,7 +3,7 @@ var Host = DB.import('host');
 
 module.exports = {
     save: save,
-    findById: findById
+    findById: findById,
     findAll: findAll
 }
 
