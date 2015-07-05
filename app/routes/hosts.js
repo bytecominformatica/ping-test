@@ -1,5 +1,3 @@
-var DB = require('../db/data-base');
-var Host = DB.import('host');
 var httpUtil = require('../util/http-util');
 var hostDao = require('../dao/hostDao');
 
@@ -24,21 +22,6 @@ function findById(req, res) {
         httpUtil.sucess(res, data);
     });
 }
-
-
-function getNodes(host, callback){
-    host.getNodes().then(function(nodes) {
-        var _host = host.dataValues;
-        _host.nodes = [];
-
-        nodes.forEach(function(node){
-            _host.nodes.push(node.dataValues)
-        });
-
-	    callback(null, _host);
-    });
-}
-
 
 function findAll(req, res) {
     hostDao.findAll(function(err, data){
