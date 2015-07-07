@@ -3,6 +3,7 @@ var Host = DB.import('host');
 
 module.exports = {
     save: save,
+    remove: remove,
     findById: findById,
     findAll: findAll
 }
@@ -23,6 +24,16 @@ function findById(id, callback) {
     }).catch(function(err){
 		callback(err);
 	});
+}
+
+function remove(id, callback) {
+    Host.findById(id).then(function(it) {
+        it.destroy().then(function() {
+            callback(null, true)
+        });
+    }).catch(function(err){
+        callback(err);
+    });
 }
 
 function getNodes(host, callback){
