@@ -1,7 +1,7 @@
 angular.module("pingTestApp")
 	.controller('treeCtrl', treeCtrl);
 	
-function treeCtrl($scope, $timeout, hostsAPI) {
+function treeCtrl($scope, hostsAPI) {
 
 	$scope.remove = remove
 	$scope.toggle = toggle
@@ -10,13 +10,11 @@ function treeCtrl($scope, $timeout, hostsAPI) {
 	$scope.collapseAll = collapseAll
 	$scope.expandAll = expandAll
 
-	var _getRootNodesScope = getRootNodesScope
-	var _carregarHosts = carregarHosts
-	var _checkHostOnline = checkHostOnline
-	
-	_carregarHosts();
+	carregarHosts();
 	
 	function remove(scope) {
+		console.log('dsfadfd');
+		console.log(scope);
 	  scope.remove();
 	};
 	
@@ -42,12 +40,12 @@ function treeCtrl($scope, $timeout, hostsAPI) {
 	};
 
 	function collapseAll() {
-	  var scope = _getRootNodesScope();
+	  var scope = getRootNodesScope();
 	  scope.collapseAll();
 	};
 
 	function expandAll() {
-	  var scope = _getRootNodesScope();
+	  var scope = getRootNodesScope();
 	  scope.expandAll();
 	};
 	
@@ -55,7 +53,7 @@ function treeCtrl($scope, $timeout, hostsAPI) {
 		hostsAPI.getHosts().success(function(data) {
 			$scope.data = data;
 			$scope.data.forEach(function(host) {
-				_checkHostOnline(host);
+				checkHostOnline(host);
 			});
 		});
 	};
@@ -67,7 +65,7 @@ function treeCtrl($scope, $timeout, hostsAPI) {
 		
 		if (host.nodes) {
 			host.nodes.forEach(function(host2) {
-				_checkHostOnline(host2);
+				checkHostOnline(host2);
 			});
 		};
 	};
