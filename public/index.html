@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<div class="container" ng-controller="treeCtrl as tCtrl">
+<div class="container" ng-controller="hostController as hostCtrl">
     <h1 class="page-header">Ping Teste</h1>
 
     <div class="row">
@@ -29,7 +29,7 @@
 						<span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span>
 					</a>
                     <a ng-href="http://{{node.ip}}" target="_blank">{{node.name}} ({{node.ip}})</a>
-                    <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="tCtrl.remove(this, node)"><span class="glyphicon glyphicon-remove"></span></a>
+                    <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="hostCtrl.remove(this, node)"><span class="glyphicon glyphicon-remove"></span></a>
                     <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
                 </div>
                 <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
@@ -51,7 +51,7 @@
 <script src="node_modules/angular/angular.min.js"></script>
 <script type="text/javascript" src="js/angular-ui-tree/angular-ui-tree.js"></script>
 <script type="text/javascript" src="app.js"></script>
-<script type="text/javascript" src="controllers/treeCtrl.js"></script>
+<script type="text/javascript" src="controllers/hostController.js"></script>
 <script type="text/javascript" src="services/hostsAPIService.js"></script>
 </body>
 </html>

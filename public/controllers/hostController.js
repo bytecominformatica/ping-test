@@ -1,7 +1,7 @@
 angular.module("pingTestApp")
-	.controller('treeCtrl', treeCtrl);
+	.controller('hostController', hostController);
 	
-function treeCtrl($scope, hostsAPI) {
+function hostController($scope, hostsAPI) {
 
 	this.remove = remove
 	$scope.toggle = toggle
