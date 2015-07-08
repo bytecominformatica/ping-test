@@ -3,7 +3,7 @@ angular.module("pingTestApp")
 	
 function treeCtrl($scope, hostsAPI) {
 
-	$scope.remove = remove
+	this.remove = remove
 	$scope.toggle = toggle
 	$scope.moveLastToTheBegginig = moveLastToTheBegginig
 	$scope.newSubItem = newSubItem
@@ -12,10 +12,12 @@ function treeCtrl($scope, hostsAPI) {
 
 	carregarHosts();
 	
-	function remove(scope) {
-		console.log('dsfadfd');
-		console.log(scope);
-	  scope.remove();
+	function remove(scope, node) {
+	    var x = hostsAPI.remove(node, function(data) {
+	        if(data.result) {
+		        scope.$parentNodesScope.removeNode(scope);
+	        }
+	    });
 	};
 	
 	function toggle(scope) {
@@ -28,13 +30,21 @@ function treeCtrl($scope, hostsAPI) {
 	};
 	
 	function newSubItem(scope) {
+	    console.log(scope);
+
 	  var nodeData = scope.$modelValue;
-	  nodeData.nodes.push({
-		id: nodeData.id * 10 + nodeData.nodes.length,
-		title: nodeData.title + '.' + (nodeData.nodes.length + 1),
-		nodes: []
-	  });
+	  if(!nodeData.nodes) {
+	    nodeData.nodes = []
+	  }
+	  console.log(nodeData.name)
+//	  nodeData.nodes.push({
+//		id: nodeData.id * 10 + nodeData.nodes.length,
+//		name: nodeData.name + '.' + (nodeData.nodes.length + 1),
+//		ip: nodeData.ip,
+//		nodes: []
+//	  });
 	};
+
 	function getRootNodesScope() {
 	  return angular.element(document.getElementById("tree-root")).scope();
 	};

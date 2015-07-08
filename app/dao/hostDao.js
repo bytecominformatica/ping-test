@@ -28,8 +28,10 @@ function findById(id, callback) {
 
 function remove(id, callback) {
     Host.findById(id).then(function(it) {
+        if (!it) callback({result: false, message: 'Nenhum registro encontrador para id = ' + id});
+
         it.destroy().then(function() {
-            callback(null, true)
+            callback(null, {result: true});
         });
     }).catch(function(err){
         callback(err);
@@ -51,7 +53,7 @@ function getNodes(host, callback){
 
 
 function findAll(callback) {
-	Host.findAll().then(function(hosts){
+	Host.findAll({where: {hostId: null}, order: ['id']}).then(function(hosts){
 		var _hosts = []
 
 		hosts.forEach(function(it, index){
