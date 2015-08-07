@@ -4,6 +4,7 @@ angular.module("pingTestApp")
 function hostAPI ($http) {
 	return {
 		getHosts: _getHosts,
+		remove: _remove,
 		isOnline: _isOnline
 	};
 
@@ -11,8 +12,10 @@ function hostAPI ($http) {
 		return $http.get("/hosts");
 	};
 
-	function _remove(host) {
-		return $http.delete("/hosts/" + host.ip);
+	function _remove(host, callback) {
+		$http.delete("/hosts/" + host.id).success(function(data){
+			callback(data);
+		});
 	};
 
 	function _isOnline(host) {

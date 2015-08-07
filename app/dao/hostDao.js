@@ -3,6 +3,7 @@ var Host = DB.import('host');
 
 module.exports = {
     save: save,
+    update: update,
     remove: remove,
     findById: findById,
     findAll: findAll
@@ -14,6 +15,24 @@ function save(host, callback){
 	}).catch(function(err){
 	    callback(err);
 	});
+}
+
+function update(host, callback){
+    Host.findById(host.id).then(function(it) {
+        if (it) {
+            it.name = host.name;
+            it.ip = host.ip;
+
+            it.save.then(function(){
+                console.log(it.dataValues);
+                callback(null, it.dataValues);
+            });
+        } else {
+            callback({result: false, message: 'Nenhum registro encontrador para id = ' + id});
+        }
+    }).catch(function(err){
+        callback(err);
+    });
 }
 
 function findById(id, callback) {
@@ -28,9 +47,13 @@ function findById(id, callback) {
 
 function remove(id, callback) {
     Host.findById(id).then(function(it) {
-        it.destroy().then(function() {
-            callback(null, true)
-        });
+        if (it)
+            it.destroy().then(function() {
+                callback(null, {result: true});
+            });
+        else {
+            callback({result: false, message: 'Nenhum registro encontrador para id = ' + id});
+        }
     }).catch(function(err){
         callback(err);
     });
@@ -51,7 +74,7 @@ function getNodes(host, callback){
 
 
 function findAll(callback) {
-	Host.findAll().then(function(hosts){
+	Host.findAll({where: {hostId: null}, order: ['id']}).then(function(hosts){
 		var _hosts = []
 
 		hosts.forEach(function(it, index){

@@ -1,21 +1,23 @@
 angular.module("pingTestApp")
-	.controller('treeCtrl', treeCtrl);
+	.controller('hostController', hostController);
 	
-function treeCtrl($scope, hostsAPI) {
+function hostController($scope, hostsAPI) {
 
-	$scope.remove = remove
-	$scope.toggle = toggle
-	$scope.moveLastToTheBegginig = moveLastToTheBegginig
-	$scope.newSubItem = newSubItem
-	$scope.collapseAll = collapseAll
-	$scope.expandAll = expandAll
+	this.remove = remove
+	this.toggle = toggle
+	this.moveLastToTheBegginig = moveLastToTheBegginig
+	this.newSubItem = newSubItem
+	this.collapseAll = collapseAll
+	this.expandAll = expandAll
 
 	carregarHosts();
 	
-	function remove(scope) {
-		console.log('dsfadfd');
-		console.log(scope);
-	  scope.remove();
+	function remove(scope, node) {
+	    var x = hostsAPI.remove(node, function(data) {
+	        if(data.result) {
+		        scope.$parentNodesScope.removeNode(scope);
+	        }
+	    });
 	};
 	
 	function toggle(scope) {
@@ -29,12 +31,18 @@ function treeCtrl($scope, hostsAPI) {
 	
 	function newSubItem(scope) {
 	  var nodeData = scope.$modelValue;
+	  if(!nodeData.nodes) {
+	    nodeData.nodes = []
+	  }
+	  console.log(nodeData.name)
 	  nodeData.nodes.push({
 		id: nodeData.id * 10 + nodeData.nodes.length,
-		title: nodeData.title + '.' + (nodeData.nodes.length + 1),
+		name: nodeData.name + '.' + (nodeData.nodes.length + 1),
+		ip: nodeData.ip,
 		nodes: []
 	  });
 	};
+
 	function getRootNodesScope() {
 	  return angular.element(document.getElementById("tree-root")).scope();
 	};
